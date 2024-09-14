@@ -1,4 +1,3 @@
-
 # Todo List React App
 
 Это простое приложение для управления задачами, созданное с использованием React для фронтенда и Node.js/Express для бэкенда.
@@ -16,28 +15,20 @@
 1. Перейдите в директорию `client`:
 
    ```sh
-   cd todo-client
+   cd todo-client 
    ```
-
-    ```
-
 2. Установите зависимости:
 
    ```sh
 
-   npm install
+   npm install 
    ```
-
-    ```
-
 3. Запустите приложение:
 
    ```sh
 
-   npm start
+   npm start 
    ```
-
-    ```
 
 ### Бэкенд
 
@@ -45,20 +36,14 @@
 
    ```sh
 
-   cd todo-server
+   cd todo-server 
    ```
-
-    ```
-
 2. Установите зависимости:
 
    ```sh
 
-   npm install
+   npm install 
    ```
-
-    ```
-
 3. Создайте файл `.env` в корне директории `server` и добавьте переменные окружения:
 
    ```env
@@ -72,10 +57,8 @@
 
    ```sh
 
-   npm start
+   npm start 
    ```
-
-    ```
 
 ## Использование
 
