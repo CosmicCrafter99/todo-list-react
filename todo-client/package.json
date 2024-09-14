@@ -6,7 +6,8 @@
     "start": "vite",
     "build": "vite build",
     "test": "vite test",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "generateDoc": "jsdoc src -r -d docs"
   },
   "browserslist": {
     "production": [
