@@ -1,10 +1,13 @@
-import React from 'react';
 import TodoItem from './TodoItem';
+import PropTypes from 'prop-types';
 
 /**
  * Компонент списка задач.
  * @param {Object} props - Свойства компонента.
  * @param {Array<Object>} props.tasks - Список задач.
+ * @param {number} props.tasks.id - Идентификатор задачи.
+ * @param {string} props.tasks.text - Текст задачи.
+ * @param {boolean} props.tasks.completed - Состояние завершенности задачи.
  * @param {function(number): void} props.toggleComplete - Функция для переключения состояния завершенности задачи.
  * @param {function(number): void} props.deleteTask - Функция для удаления задачи.
  * @param {function(): void} props.saveTask - Функция для сохранения задачи.
@@ -28,5 +31,18 @@ function TodoList({ tasks, toggleComplete, deleteTask, saveTask }) {
         </ul>
     );
 }
+
+TodoList.propTypes = {
+    tasks: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            text: PropTypes.string.isRequired,
+            completed: PropTypes.bool.isRequired,
+        })
+    ).isRequired,
+    toggleComplete: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired,
+    saveTask: PropTypes.func.isRequired,
+};
 
 export default TodoList;

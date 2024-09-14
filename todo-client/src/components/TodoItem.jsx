@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Компонент отдельной задачи.
@@ -24,6 +25,13 @@ function TodoItem({ task, toggleComplete, deleteTask, saveTask }) {
         saveTask({ ...task, text: editedText });
         setIsEditing(false);
     };
+
+    useEffect(() => {
+        return () => {
+            setEditedText(task.text);
+            setIsEditing(false);
+        }
+    }, []);
 
     return (
         <li className={`task-item ${task.completed ? 'completed' : ''}`}>
@@ -59,5 +67,16 @@ function TodoItem({ task, toggleComplete, deleteTask, saveTask }) {
         </li>
     );
 }
+
+TodoItem.propTypes = {
+    task: PropTypes.shape({
+        _id: PropTypes.number.isRequired,
+        text: PropTypes.string.isRequired,
+        completed: PropTypes.bool.isRequired,
+    }).isRequired,
+    toggleComplete: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired,
+    saveTask: PropTypes.func.isRequired,
+};
 
 export default TodoItem;

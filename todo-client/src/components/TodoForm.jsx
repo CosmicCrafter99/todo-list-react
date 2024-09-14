@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Компонент формы для добавления новой задачи.
@@ -24,5 +25,9 @@ function TodoForm({ addTask }) {
         </form>
     );
 }
+
+TodoForm.propTypes = {
+    addTask: PropTypes.func.isRequired,
+};
 
 export default TodoForm;

@@ -4,7 +4,7 @@ import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import './App.css';
 
-const API_URL = 'http://localhost:3001/api/todos'; // URL для API
+const API_URL = '/api/todos'; // URL для API
 
 /**
  * Главный компонент приложения с подключением к серверу
@@ -85,6 +85,7 @@ function App() {
         value={userId}
         onChange={handleUserIdChange}
         placeholder="Enter User ID"
+        className='user-id-input'
       />
       <TodoForm addTask={addTask} />
       <TodoList tasks={tasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} />
