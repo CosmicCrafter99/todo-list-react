@@ -13,6 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Use secret as environment variable
+        run: echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> $GITHUB_ENV
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:

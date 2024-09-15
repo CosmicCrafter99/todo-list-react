@@ -4,8 +4,7 @@ import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import './App.css';
 
-const API_URL = '/api/todos'; // URL для API
-
+const API_URL = import.meta.env.VITE_API_URL; // URL для API
 /**
  * Главный компонент приложения с подключением к серверу
  * @component
