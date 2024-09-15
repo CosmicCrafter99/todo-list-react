@@ -49,21 +49,19 @@ function TodoItem({ task, toggleComplete, deleteTask, saveTask }) {
             ) : (
                 <span>{task.text}</span>
             )}
-            {!task.completed && (
-                <div className='buttons-block'>
-                    {isEditing ? (
-                        <>
-                            <button onClick={handleSave}>Save</button>
-                            <button onClick={() => setIsEditing(false)}>Cancel</button>
-                        </>
-                    ) : (
-                        <>
-                            <button onClick={() => setIsEditing(true)}>Edit</button>
-                            <button onClick={() => deleteTask(task._id)}>Delete</button>
-                        </>
-                    )}
-                </div>
-            )}
+            <div className='buttons-block'>
+                {isEditing ? (
+                    <>
+                        <button onClick={handleSave}><i className="fas fa-check"></i></button>
+                        <button onClick={() => setIsEditing(false)}><i className="fas fa-times"></i></button>
+                    </>
+                ) : (
+                    <>
+                        {!task.completed && <button onClick={() => setIsEditing(true)}><i className="fas fa-edit"></i></button>}
+                        <button onClick={() => deleteTask(task._id)}><i className="fas fa-trash"></i></button>
+                    </>
+                )}
+            </div>
         </li>
     );
 }

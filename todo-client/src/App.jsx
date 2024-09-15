@@ -20,17 +20,14 @@ function App() {
   };
 
   // Получение задач с сервера
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/${userId}`);
-        setTasks(res.data);
-      } catch (err) {
-        console.log('Ошибка при получении задач:', err);
-      }
-    };
-    fetchTasks();
-  }, [userId]);
+  const fetchTasks = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/${userId}`);
+      setTasks(res.data);
+    } catch (err) {
+      console.log('Ошибка при получении задач:', err);
+    }
+  };
 
   // Добавление новой задачи
   const addTask = async (taskText) => {
@@ -74,6 +71,10 @@ function App() {
     }
   };
 
+  const handleConnect = () => {
+    fetchTasks();
+  };
+
   return (
     <div className="app">
       <header className="app-header">
@@ -86,6 +87,7 @@ function App() {
         placeholder="Enter User ID"
         className='user-id-input'
       />
+      <button onClick={handleConnect}>Connect</button>
       <TodoForm addTask={addTask} />
       <TodoList tasks={tasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} />
     </div>
