@@ -22,10 +22,6 @@ jobs:
         run: npm install
         working-directory: ./todo-server
 
-      - name: Build server
-        run: npm run build
-        working-directory: ./todo-server
-
       - name: Deploy to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
