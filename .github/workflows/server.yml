@@ -15,9 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use secret as environment variable
-        run: echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -26,6 +23,18 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./todo-server
+
+      - name: Login to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku login --apikey $HEROKU_API_KEY
+
+      - name: Set Heroku Config Vars
+        env:
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: |
+          heroku config:set MONGO_URI=$MONGO_URI --app $HEROKU_APP_NAME
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
