@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
     plugins: [react()],
-    base: '/todo-list-react/todo-client/', // Путь до приложения
+    base: '',
     server: {
         open: true,
         port: 3000,
