@@ -3,14 +3,24 @@ const Todo = require('../models/Todo');
 
 const router = express.Router();
 
-// Получение всех задач для пользователя
+// Получение задач с фильтрацией
 router.get('/:userId', async (req, res) => {
     const { userId } = req.params;
+    const { filter } = req.query;
+
     try {
-        const todos = await Todo.find({ userId });
+        let query = { userId };
+
+        if (filter === 'completed') {
+            query.completed = true;
+        } else if (filter === 'incomplete') {
+            query.completed = false;
+        }
+
+        const todos = await Todo.find(query);
         res.json(todos);
     } catch (err) {
-        res.status(500).json({ error: 'Ошибка при получении задач' });
+        res.status(500).json({ message: err.message });
     }
 });
 

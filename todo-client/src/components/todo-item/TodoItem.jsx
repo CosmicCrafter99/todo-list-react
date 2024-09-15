@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import './TodoItem.css';
 
 /**
  * Компонент отдельной задачи.
@@ -68,7 +69,7 @@ function TodoItem({ task, toggleComplete, deleteTask, saveTask }) {
 
 TodoItem.propTypes = {
     task: PropTypes.shape({
-        _id: PropTypes.number.isRequired,
+        _id: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
         completed: PropTypes.bool.isRequired,
     }).isRequired,

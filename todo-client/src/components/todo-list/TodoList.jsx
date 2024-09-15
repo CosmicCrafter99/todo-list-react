@@ -1,5 +1,6 @@
-import TodoItem from './TodoItem';
+import TodoItem from '../todo-item/TodoItem';
 import PropTypes from 'prop-types';
+import './TodoList.css';
 
 /**
  * Компонент списка задач.
@@ -35,7 +36,7 @@ function TodoList({ tasks, toggleComplete, deleteTask, saveTask }) {
 TodoList.propTypes = {
     tasks: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            _id: PropTypes.string.isRequired,
             text: PropTypes.string.isRequired,
             completed: PropTypes.bool.isRequired,
         })
