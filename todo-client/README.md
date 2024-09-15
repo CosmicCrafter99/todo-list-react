@@ -1,70 +1,77 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Todo Client
 
-## Available Scripts
+Это клиентская часть приложения для управления задачами (Todo). Приложение разработано с использованием React и Vite.
 
-In the project directory, you can run:
+## Установка
 
-### `npm start`
+1. Клонируйте репозиторий:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+   ```sh
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+   git clone https://github.com/your-username/todo-client.git 
+   ```
+2. Перейдите в директорию проекта:
 
-### `npm test`
+   ```sh
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   cd todo-client 
+   ```
+3. Установите зависимости:
 
-### `npm run build`
+   ```sh
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   npm install 
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Настройка переменных окружения
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Создайте файл `.env` в корневой директории проекта и добавьте туда ваши переменные окружения. Например:
 
-### `npm run eject`
+```env
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+VITE_API_URL=http://localhost:3001/api/todos 
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Запуск приложения
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Для запуска приложения в режиме разработки выполните:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+npm run start
+```
 
-## Learn More
+Приложение будет доступно по адресу [http://localhost:3000](vscode-file://vscode-app/Users/dariagritsienko/Desktop/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Сборка приложения
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Для сборки приложения выполните:
 
-### Code Splitting
+```
+npm run build 
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Собранное приложение будет находиться в директории `dist`.
 
-### Analyzing the Bundle Size
+## Тестирование
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Для запуска тестов выполните:
 
-### Making a Progressive Web App
+```
+npm run test 
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Структура проекта
 
-### Advanced Configuration
+* `src/` - исходный код приложения
+  * `components/` - компоненты React
+  * `App.jsx` - главный компонент приложения
+  * `index.jsx` - точка входа в приложение
+* `public/` - статические файлы
+* `dist/` - собранное приложение (создается после выполнения команды `npm run build`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Используемые технологии
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* [React](vscode-file://vscode-app/Users/dariagritsienko/Desktop/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [Vite](vscode-file://vscode-app/Users/dariagritsienko/Desktop/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [Axios](vscode-file://vscode-app/Users/dariagritsienko/Desktop/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
