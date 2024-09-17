@@ -27,12 +27,10 @@ function TodoItem({ task, toggleComplete, deleteTask, saveTask }) {
         setIsEditing(false);
     };
 
-    useEffect(() => {
-        return () => {
-            setEditedText(task.text);
-            setIsEditing(false);
-        }
-    }, []);
+    const handleEdit = () => {
+        setIsEditing(true);
+        setEditedText(task.text);
+    }
 
     return (
         <li className={`task-item ${task.completed ? 'completed' : ''}`}>
@@ -58,7 +56,7 @@ function TodoItem({ task, toggleComplete, deleteTask, saveTask }) {
                     </>
                 ) : (
                     <>
-                        {!task.completed && <button onClick={() => setIsEditing(true)}><i className="fas fa-edit"></i></button>}
+                        {!task.completed && <button onClick={handleEdit}><i className="fas fa-edit"></i></button>}
                         <button onClick={() => deleteTask(task._id)}><i className="fas fa-trash"></i></button>
                     </>
                 )}

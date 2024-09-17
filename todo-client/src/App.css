@@ -59,3 +59,6 @@ button i {
   font-size: 1.2em;
 }
 
+.MuiSnackbar-root {
+  z-index: 1400;
+}

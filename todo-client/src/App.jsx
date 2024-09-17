@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import TodoForm from './components/todo-form/TodoForm';
 import TodoList from './components/todo-list/TodoList';
@@ -20,6 +21,7 @@ function App() {
   const [filter, setFilter] = useState('all');
   const [activeFilter, setActiveFilter] = useState(false);
   const [user, setUser] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -64,6 +66,7 @@ function App() {
       setTasks(res.data);
     } catch (err) {
       console.log('Ошибка при получении задач:', err);
+      enqueueSnackbar('Ошибка при получении задач! Попробуйте чуть позже', { variant: 'error' });
     }
   };
 
@@ -72,8 +75,10 @@ function App() {
     try {
       const res = await axios.post(API_URL, { text: taskText, userId: user.uid });
       setTasks([...tasks, res.data]);
+      enqueueSnackbar('Задача добавлена', { variant: 'success' });
     } catch (err) {
       console.log('Ошибка при добавлении задачи:', err);
+      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
     }
   };
 
@@ -83,8 +88,14 @@ function App() {
     try {
       const res = await axios.put(`${API_URL}/${id}/status`, { completed: !task.completed });
       setTasks(tasks.map(t => t._id === id ? res.data : t));
+      if (!task.completed) {
+        enqueueSnackbar('Задача завершена', { variant: 'success' });
+      } else {
+        enqueueSnackbar('Задача восстановлена', { variant: 'info' });
+      }
     } catch (err) {
       console.log('Ошибка при обновлении задачи:', err);
+      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
     }
   };
 
@@ -93,8 +104,10 @@ function App() {
     try {
       await axios.delete(`${API_URL}/${id}`);
       setTasks(tasks.filter(task => task._id !== id));
+      enqueueSnackbar('Задача удалена', { variant: 'error' });
     } catch (err) {
       console.log('Ошибка при удалении задачи:', err);
+      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
     }
   }
 
@@ -103,8 +116,10 @@ function App() {
     try {
       await axios.put(`${API_URL}/${task._id}/text`, { text: task.text });
       setTasks(tasks.map(t => t._id === task._id ? task : t));
+      enqueueSnackbar('Задача изменена', { variant: 'info' });
     } catch (err) {
       console.log('Ошибка при сохранении задачи:', err);
+      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
     }
   };
 
