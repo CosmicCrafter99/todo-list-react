@@ -19,7 +19,6 @@ const API_URL = import.meta.env.VITE_API_URL; // URL для API
 function App() {
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('all');
-  const [activeFilter, setActiveFilter] = useState(false);
   const [user, setUser] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -32,33 +31,12 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      const fetchTasks = async () => {
-        try {
-          const res = await axios.get(`${API_URL}/${user.uid}`);
-          setTasks(res.data);
-        } catch (err) {
-          console.log('Ошибка при получении задач:', err);
-        }
-      };
       fetchTasks();
     }
-  }, [user]);
-
-  useEffect(() => {
-    if (user) {
-      fetchTasks(filter);
-    }
-  }, [filter]);
-
-  useEffect(() => {
-    if (!user) {
-      setActiveFilter(false);
-      setTasks([]);
-    }
-  }, [user]);
+  }, [user, filter]);
 
   // Получение задач с сервера
-  const fetchTasks = async (filter) => {
+  const fetchTasks = async () => {
     try {
       const res = await axios.get(`${API_URL}/${user.uid}`, {
         params: { filter }
@@ -136,7 +114,7 @@ function App() {
       {
         user ? (
           <>
-            {activeFilter && <TodoFilter filter={filter} setFilter={setFilter} />}
+            <TodoFilter filter={filter} setFilter={setFilter} />
             <TodoForm addTask={(value) => addTask(value)} />
             {tasks.length > 0 && <TodoList tasks={tasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} />}
           </>
