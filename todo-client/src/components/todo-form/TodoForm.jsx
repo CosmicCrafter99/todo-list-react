@@ -22,7 +22,7 @@ function TodoForm({ addTask }) {
     return (
         <form onSubmit={handleSubmit} className='task-input'>
             <input type="text" placeholder="Add a new task..." value={task} onChange={(e) => setTask(e.target.value)} />
-            <button onClick={addTask}>Add Task</button>
+            <button className='add-task-button'>Add Task</button>
         </form>
     );
 }

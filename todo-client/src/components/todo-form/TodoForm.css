@@ -13,9 +13,18 @@
     border-radius: 5px;
 }
   
-.task-input button {
+.add-task-button {
     width: 20%;
     background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-task-button:hover {
+    width: 20%;
+    background-color: #0056b3;
     color: white;
     border: none;
     border-radius: 5px;
