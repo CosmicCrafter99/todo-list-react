@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './TodoItem.css';
 
@@ -33,21 +33,24 @@ function TodoItem({ task, toggleComplete, deleteTask, saveTask }) {
     }
 
     return (
-        <li className={`task-item ${task.completed ? 'completed' : ''}`}>
-            <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={handleCheckboxChange}
-            />
-            {isEditing ? (
+        <li className={`todo-item ${task.completed ? 'completed' : ''}`}>
+            <div className="left-section">
                 <input
-                    type="text"
-                    value={editedText}
-                    onChange={(e) => setEditedText(e.target.value)}
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={handleCheckboxChange}
                 />
-            ) : (
-                <span>{task.text}</span>
-            )}
+                {isEditing ? (
+                    <input
+                        type="text"
+                        value={editedText}
+                        onChange={(e) => setEditedText(e.target.value)}
+                        className="edit-input"
+                    />
+                ) : (
+                    <span className='task-text'>{task.text}</span>
+                )}
+            </div>
             <div className='buttons-block'>
                 {isEditing ? (
                     <>

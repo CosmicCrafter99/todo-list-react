@@ -8,9 +8,7 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <SnackbarProvider maxSnack={3}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </SnackbarProvider>
 );
 

@@ -26,11 +26,12 @@ router.get('/:userId', async (req, res) => {
 
 // Создание новой задачи
 router.post('/', async (req, res) => {
-    const { text, userId } = req.body;
+    const { text, userId, order } = req.body;
     try {
         const newTodo = new Todo({
             text,
-            userId
+            userId,
+            order
         });
         await newTodo.save();
         res.status(201).json(newTodo);
@@ -74,6 +75,23 @@ router.delete('/:id', async (req, res) => {
         res.json({ message: 'Задача удалена' });
     } catch (err) {
         res.status(500).json({ error: 'Ошибка при удалении задачи' });
+    }
+});
+
+// Маршрут для обновления порядка задач
+router.put('/:userId/order', async (req, res) => {
+    const { userId } = req.params;
+    const { tasks } = req.body;
+
+    try {
+        // Обновление порядка задач в базе данных
+        for (let i = 0; i < tasks.length; i++) {
+            await Todo.updateOne({ _id: tasks[i]._id, userId }, { $set: { order: i } });
+        }
+
+        res.status(200).json({ message: 'Порядок задач обновлен' });
+    } catch (err) {
+        res.status(500).json({ message: 'Ошибка при обновлении порядка задач', error: err });
     }
 });
 

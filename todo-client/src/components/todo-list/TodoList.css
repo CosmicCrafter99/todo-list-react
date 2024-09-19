@@ -1,8 +1,22 @@
-.task-list {
+.todo-list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
   
 .task-list li {
     margin-bottom: 20px;
+}
+
+.todo-item-wrapper {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+}
+
+.todo-item-wrapper:active {
+    cursor: grabbing;
+}
+.todo-item-wrapper.completed {
+    cursor: default; /* Курсор по умолчанию для завершенных задач */
+    opacity: 0.6; /* Прозрачность для завершенных задач */
 }

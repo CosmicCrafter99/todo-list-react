@@ -41,7 +41,8 @@ function App() {
       const res = await axios.get(`${API_URL}/${user.uid}`, {
         params: { filter }
       });
-      setTasks(res.data);
+      const sortedTasks = res.data.sort((a, b) => a.order - b.order); // Сортировка задач по полю order
+      setTasks(sortedTasks);
     } catch (err) {
       console.log('Ошибка при получении задач:', err);
       enqueueSnackbar('Ошибка при получении задач! Попробуйте чуть позже', { variant: 'error' });
@@ -50,9 +51,16 @@ function App() {
 
   // Добавление новой задачи
   const addTask = async (taskText) => {
+    const minOrder = tasks.length > 0 ? Math.min(...tasks.map(task => task.order)) : 0;
+    const newTask = {
+      text: taskText,
+      completed: false,
+      order: minOrder - 1,
+      userId: user.uid
+    };
     try {
-      const res = await axios.post(API_URL, { text: taskText, userId: user.uid });
-      setTasks([...tasks, res.data]);
+      const res = await axios.post(API_URL, newTask);
+      setTasks([res.data, ...tasks]);
       enqueueSnackbar('Задача добавлена', { variant: 'success' });
     } catch (err) {
       console.log('Ошибка при добавлении задачи:', err);
@@ -87,7 +95,7 @@ function App() {
       console.log('Ошибка при удалении задачи:', err);
       enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
     }
-  }
+  };
 
   // Сохранение измененной задачи
   const saveTask = async (task) => {
@@ -101,9 +109,26 @@ function App() {
     }
   };
 
+  // Обновление порядка задач
+  const updateTaskOrder = async (newTasks) => {
+    setTasks([...newTasks, ...completeTasks]);
+    try {
+      await axios.put(`${API_URL}/${user.uid}/order`, { tasks: newTasks });
+      enqueueSnackbar('Порядок задач обновлен', { variant: 'info' });
+    } catch (err) {
+      console.log('Ошибка при обновлении порядка задач:', err);
+      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut(auth);
+    setUser(null); // Сбросьте состояние пользователя
   };
+
+  // Разделение задач на завершенные и незавершенные
+  const incompleteTasks = tasks.filter(task => !task.completed);
+  const completeTasks = tasks.filter(task => task.completed);
 
   return (
     <div className="app">
@@ -116,7 +141,13 @@ function App() {
           <>
             <TodoFilter filter={filter} setFilter={setFilter} />
             <TodoForm addTask={(value) => addTask(value)} />
-            {tasks.length > 0 && <TodoList tasks={tasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} />}
+            {tasks.length > 0 && (
+              <>
+                <TodoList tasks={incompleteTasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} updateTaskOrder={updateTaskOrder} />
+                {filter !== 'incomplete' && <h2>Завершенные задачи</h2>}
+                <TodoList tasks={completeTasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} updateTaskOrder={() => { }} />
+              </>
+            )}
           </>
         ) : (
           <Home />

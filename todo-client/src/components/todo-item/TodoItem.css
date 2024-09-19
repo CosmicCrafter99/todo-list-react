@@ -2,7 +2,48 @@
     color: #2c2d2c;
 }
 
-
 .buttons-block {
-    float: right;
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0; /* Предотвращает сжатие контейнера с кнопками */
+}
+
+.task-title {
+    margin: 0;
+    font-size: 20px;
+    color: #2c2d2c;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 16px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    word-wrap: break-word; /* Перенос длинных слов */
+    white-space: normal; /* Перенос текста */
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* Позволяет контейнеру расширяться */
+}
+
+.task-text {
+    margin-left: 10px;
+    word-wrap: break-word; /* Перенос длинных слов */
+    white-space: normal; /* Перенос текста */
+}
+
+.edit-input {
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    flex-grow: 1; /* Позволяет полю ввода расширяться */
 }
