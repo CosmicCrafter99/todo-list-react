@@ -19,7 +19,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
     const [editedText, setEditedText] = useState(task.text);
     const [editedDescription, setEditedDescription] = useState(task.description || '');
     const [editedDeadline, setEditedDeadline] = useState(task.deadline ? task.deadline.split('T')[0] : '');
-    const [editedTime, setEditedTime] = useState(task.deadline ? task.deadline.split('T')[1].slice(0, 5) : '');
+    const [editedTime, setEditedTime] = useState(task.deadline && task.deadline.includes('T') ? task.deadline.split('T')[1].slice(0, 5) : '');
     const textareaRef = useRef(null);
 
     const { enqueueSnackbar } = useSnackbar();
@@ -51,8 +51,8 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
         setIsEditing(true);
         setEditedText(task.text);
         setEditedDescription(task.description || '');
-        setEditedDeadline(task.deadline ? task.deadline.split('T')[0] : '');
-        setEditedTime(task.deadline ? task.deadline.split('T')[1].slice(0, 5) : '');
+        setEditedDeadline(task.deadline ? task.deadline?.split('T')[0] : '');
+        setEditedTime(task.deadline ? task.deadline?.split('T')[1].slice(0, 5) : '');
     };
 
     const handleCopy = () => {
@@ -132,7 +132,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
                             )}
                             {task.deadline && (
                                 <span className={`task-deadline ${isDeadlineOverdue && !task.completed ? 'overdue' : ''}`}>
-                                    Deadline: {new Date(task.deadline).toLocaleString()}
+                                    Deadline: {task.deadline.includes('T') ? new Date(task.deadline).toLocaleString() : new Date(task.deadline).toLocaleDateString()}
                                 </span>
                             )}
                         </div>

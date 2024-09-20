@@ -3,10 +3,24 @@
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
-    padding: 24px;
+    padding: 80px;
     border: 1px solid #C71585;
     border-radius: 8px;
     background: white;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .todo-form {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .todo-form {
+        padding: 20px;
+        gap: 5px;
+    }
 }
 
 .todo-input {

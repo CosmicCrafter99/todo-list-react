@@ -1,24 +1,20 @@
-
 .todo-filter {
-  margin-bottom: 20px;
-}
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
   
-.filter-button {
-    background-color: #FF6F91;
-    border: none;
-    color: #FFFFFF;
+  .todo-filter label {
+    margin-right: 10px;
+  }
+  
+  .todo-filter select {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #D291BC;
     border-radius: 5px;
-    padding: 10px 20px;
-    margin: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-  
-.filter-button:hover {
-    background-color: #FF85B3;
-}
-  
-.filter-button.active {
-    background-color: #FF85B3;
-} 
+    margin-right: 4px; /* Добавляем отступ между фильтрами */
+  }
+  .todo-filter select:last-child {
+    margin-right: 0; /* Убираем отступ после последнего фильтра */
+  }
