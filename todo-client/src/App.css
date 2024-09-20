@@ -54,10 +54,6 @@ button {
   color: #FFFFFF;
 }
 
-button:hover {
-  background-color: #FF85B3;
-}
-
 button i {
   font-size: 1.2em;
 }

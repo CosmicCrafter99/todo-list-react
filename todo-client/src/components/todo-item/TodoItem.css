@@ -81,11 +81,6 @@
     transition: border-color 0.3s ease;
 }
 
-.edit-input:focus {
-    border-color: #FF1493;
-    outline: none;
-}
-
 .fas {
     color: #2c2d2c;
 }
