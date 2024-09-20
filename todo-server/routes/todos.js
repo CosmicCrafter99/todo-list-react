@@ -26,13 +26,14 @@ router.get('/:userId', async (req, res) => {
 
 // Создание новой задачи
 router.post('/', async (req, res) => {
-    const { text, userId, order, deadline } = req.body;
+    const { text, userId, order, deadline, description } = req.body;
     try {
         const newTodo = new Todo({
             text,
             userId,
             order,
-            deadline
+            deadline,
+            description
         });
         await newTodo.save();
         res.status(201).json(newTodo);

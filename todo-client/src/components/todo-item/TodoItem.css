@@ -34,7 +34,13 @@
 
 .task-text {
     font-size: 1.1em;
-    font-weight: 500;
+    font-weight: 600;
+    color: #333;
+}
+
+.task-description {
+    margin-top: 4px;
+    font-size: 1em;
     color: #333;
 }
 

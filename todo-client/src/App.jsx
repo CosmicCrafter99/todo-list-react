@@ -50,14 +50,13 @@ function App() {
   };
 
   // Добавление новой задачи
-  const addTask = async (taskText, deadline) => {
+  const addTask = async (taskParams) => {
     const minOrder = tasks.length > 0 ? Math.min(...tasks.map(task => task.order)) : 0;
     const newTask = {
-      text: taskText,
+      ...taskParams,
       completed: false,
       order: minOrder - 1,
       userId: user.uid,
-      deadline: deadline || null // Добавление дедлайна
     };
     try {
       const res = await axios.post(API_URL, newTask);
@@ -90,15 +89,15 @@ function App() {
 
       const originalTask = tasks.find(t => t._id === updatedTask._id);
       if (updatedTask.completed !== undefined && originalTask.completed !== updatedTask.completed) {
-        const message = updatedTask.completed ? 'Задача завершена' : 'Задача восстановлена';
+        const message = updatedTask.completed ? 'Task completed' : 'Task restored';
         const variant = updatedTask.completed ? 'success' : 'info';
         enqueueSnackbar(message, { variant });
       } else {
-        enqueueSnackbar('Задача обновлена', { variant: 'success' });
+        enqueueSnackbar('Task updated', { variant: 'success' });
       }
     } catch (err) {
-      console.log('Ошибка при обновлении задачи:', err);
-      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
+      console.log('Error updating task:', err);
+      enqueueSnackbar('Error! Please try again later', { variant: 'error' });
     }
   };
 

@@ -11,6 +11,7 @@ import './TodoForm.css';
  */
 const TodoForm = ({ addTask }) => {
     const [text, setText] = useState('');
+    const [description, setDescription] = useState('');
     const [deadlineDate, setDeadlineDate] = useState('');
     const [deadlineTime, setDeadlineTime] = useState('');
 
@@ -29,6 +30,7 @@ const TodoForm = ({ addTask }) => {
 
         addTask(text, deadline);
         setText('');
+        setDescription('');
         setDeadlineDate('');
         setDeadlineTime('');
     };
@@ -53,6 +55,13 @@ const TodoForm = ({ addTask }) => {
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Add a new task..."
                 className="todo-input"
+            />
+            <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Add a description..."
+                className="todo-input"
+                rows="3"
             />
             <input
                 type="date"

@@ -8,9 +8,8 @@ import './TodoList.css';
  * Компонент списка задач.
  * @param {Object} props - Свойства компонента.
  * @param {Array} props.tasks - Список задач.
- * @param {function(string): void} props.toggleComplete - Функция для переключения состояния выполнения задачи.
  * @param {function(string): void} props.deleteTask - Функция для удаления задачи.
- * @param {function(Object): void} props.saveTask - Функция для сохранения изменений задачи.
+ * @param {function(Object): void} props.updateTask - Функция для сохранения изменений задачи.
  * @param {function(Array): void} props.updateTaskOrder - Функция для обновления порядка задач.
  * @returns {JSX.Element} Компонент TodoList.
  */
