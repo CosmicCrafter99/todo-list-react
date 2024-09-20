@@ -89,12 +89,14 @@ const TodoForm = ({ addTask }) => {
                 value={deadlineDate}
                 onChange={(e) => setDeadlineDate(e.target.value)}
                 className="todo-input"
+                placeholder='Add a deadline date...'
                 min={minDate}
             />
             <input
                 type="time"
                 value={deadlineTime}
                 onChange={(e) => setDeadlineTime(e.target.value)}
+                placeholder='Add a deadline time...'
                 className="todo-input"
             />
             <button type="submit" className="todo-button">Add Task</button>

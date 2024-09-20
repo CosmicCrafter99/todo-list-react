@@ -107,6 +107,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
                             value={editedDeadline}
                             onChange={(e) => setEditedDeadline(e.target.value)}
                             className="edit-input"
+                            placeholder='Add a deadline date...'
                             min={minDate}
                         />
                         <input
@@ -114,6 +115,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
                             value={editedTime}
                             onChange={(e) => setEditedTime(e.target.value)}
                             className="edit-input"
+                            placeholder='Add a deadline time...'
                             min={editedDeadline === minDate ? minTime : ''}
                         />
                     </div>

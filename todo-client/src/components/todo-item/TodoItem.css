@@ -78,13 +78,17 @@
     margin-bottom: 10px;
     padding: 10px;
     font-size: 1em;
-    border: 1px solid #ddd;
+    border: 1px solid #DB7093;
     border-radius: 4px;
     resize: none;
     overflow: hidden;
     width: 100%;
     box-sizing: border-box;
     transition: border-color 0.3s ease;
+    background: #FFF;
+}
+.edit-input:focus-visible {
+    outline: none;
 }
 
 .fas {
