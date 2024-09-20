@@ -74,7 +74,16 @@ function App() {
     const task = tasks.find(t => t._id === id);
     try {
       const res = await axios.put(`${API_URL}/${id}/status`, { completed: !task.completed });
-      setTasks(tasks.map(t => t._id === id ? res.data : t));
+      const updatedTask = res.data;
+      const updatedTasks = tasks.map(t => t._id === id ? updatedTask : t);
+
+      // Разделение задач на завершенные и незавершенные
+      const completedTasks = updatedTasks.filter(t => t.completed);
+      const incompleteTasks = updatedTasks.filter(t => !t.completed);
+
+      // Объединение задач с завершенными в начале
+      setTasks([...completedTasks, ...incompleteTasks]);
+
       if (!task.completed) {
         enqueueSnackbar('Задача завершена', { variant: 'success' });
       } else {
