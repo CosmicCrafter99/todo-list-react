@@ -15,10 +15,11 @@
     background: #FFF;
     border-radius: 5px;
     margin-right: 4px; /* Добавляем отступ между фильтрами */
+    color: #333;
   }
-.todo-filter select:focus-visible {
-    outline: none;
-}
+  .todo-filter select:focus-visible {
+      outline: none;
+  }
 
   .todo-filter select:last-child {
     margin-right: 0; /* Убираем отступ после последнего фильтра */
