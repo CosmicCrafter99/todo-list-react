@@ -24,6 +24,7 @@
     transform: scale(1.2);
     align-self: flex-start;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .task-details {
