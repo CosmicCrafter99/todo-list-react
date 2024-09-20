@@ -60,32 +60,30 @@ function SignUp() {
     };
 
     return (
-        <div className="signup-container">
-            <div className="signup-form">
-                <h2>Sign Up</h2>
-                <form onSubmit={handleSignUp}>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    <button type="submit">Sign Up</button>
-                </form>
-                {error && <p>{error}</p>}
-            </div>
+        <div className="signup-form">
+            <h2>Sign Up</h2>
+            <form onSubmit={handleSignUp}>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                <button type="submit">Sign Up</button>
+            </form>
+            {error && <p>{error}</p>}
         </div>
     );
 }

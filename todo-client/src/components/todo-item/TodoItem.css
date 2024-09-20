@@ -94,3 +94,39 @@
 .fas {
     color: #2c2d2c;
 }
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+    .edit-input {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .edit-section {
+        flex-direction: column;
+    }
+
+    .cursor-pointer {
+        font-size: 0.8em;
+    }
+
+    .fas {
+        font-size: 1.1em;
+    }
+
+    .buttons-block {
+        gap: 5px;
+    }
+
+    .task-text {
+        font-size: 1em;
+    }
+
+    .task-description {
+        font-size: 0.9em;
+    }
+
+    .task-deadline {
+        font-size: 0.8em;
+    }
+}
