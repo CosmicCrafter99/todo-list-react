@@ -21,6 +21,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
     const [editedDeadline, setEditedDeadline] = useState(task.deadline ? task.deadline.split('T')[0] : '');
     const [editedTime, setEditedTime] = useState(task.deadline && task.deadline.includes('T') ? task.deadline.split('T')[1].slice(0, 5) : '');
     const textareaRef = useRef(null);
+    const descriptionRef = useRef(null);
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -30,6 +31,13 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
         }
     }, [isEditing, editedText]);
+
+    useEffect(() => {
+        if (isEditing && descriptionRef.current) {
+            descriptionRef.current.style.height = 'auto';
+            descriptionRef.current.style.height = `${descriptionRef.current.scrollHeight}px`;
+        }
+    }, [isEditing, editedDescription]);
 
     const handleCheckboxChange = () => {
         updateTask({ ...task, completed: !task.completed });
@@ -96,6 +104,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
                             rows="1"
                         />
                         <textarea
+                            ref={descriptionRef}
                             value={editedDescription}
                             onChange={(e) => setEditedDescription(e.target.value)}
                             className="edit-input"
