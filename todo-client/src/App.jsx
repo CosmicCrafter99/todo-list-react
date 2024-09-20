@@ -29,25 +29,25 @@ function App() {
     return () => unsubscribe();
   }, []);
 
+  // Получение задач с сервера
   useEffect(() => {
     if (user) {
+      const fetchTasks = async () => {
+        try {
+          const res = await axios.get(`${API_URL}/${user.uid}`, {
+            params: { filter }
+          });
+          const sortedTasks = res.data.sort((a, b) => a.order - b.order); // Сортировка задач по полю order
+          setTasks(sortedTasks);
+        } catch (err) {
+          console.log('Ошибка при получении задач:', err);
+          enqueueSnackbar('Error fetching tasks! Please try again later', { variant: 'error' });
+        }
+      };
+
       fetchTasks();
     }
   }, [user, filter]);
-
-  // Получение задач с сервера
-  const fetchTasks = async () => {
-    try {
-      const res = await axios.get(`${API_URL}/${user.uid}`, {
-        params: { filter }
-      });
-      const sortedTasks = res.data.sort((a, b) => a.order - b.order); // Сортировка задач по полю order
-      setTasks(sortedTasks);
-    } catch (err) {
-      console.log('Ошибка при получении задач:', err);
-      enqueueSnackbar('Error fetching tasks! Please try again later', { variant: 'error' });
-    }
-  };
 
   // Добавление новой задачи
   const addTask = async (taskParams) => {
@@ -132,7 +132,7 @@ function App() {
         user ? (
           <>
             <TodoFilter filter={filter} setFilter={setFilter} />
-            <TodoForm addTask={(text, date) => addTask(text, date)} />
+            <TodoForm addTask={addTask} />
             {tasks.length > 0 && (
               <>
                 <TodoList tasks={incompleteTasks} updateTask={updateTask} deleteTask={deleteTask} updateTaskOrder={updateTaskOrder} />

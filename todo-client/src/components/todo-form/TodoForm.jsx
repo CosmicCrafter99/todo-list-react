@@ -28,7 +28,7 @@ const TodoForm = ({ addTask }) => {
             return;
         }
 
-        addTask(text, deadline);
+        addTask({ text, deadline, description });
         setText('');
         setDescription('');
         setDeadlineDate('');
