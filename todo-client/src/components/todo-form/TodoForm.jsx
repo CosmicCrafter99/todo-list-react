@@ -70,6 +70,7 @@ const TodoForm = ({ addTask }) => {
 
     return (
         <form className="todo-form" onSubmit={handleSubmit}>
+            <h2 className='task-form-title'>Add Task</h2>
             <input
                 type="text"
                 value={text}
