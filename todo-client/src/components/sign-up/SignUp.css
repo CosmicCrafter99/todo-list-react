@@ -7,7 +7,7 @@
   }
   
   .signup-form {
-    background: white;
+    background: #fff;
     padding: 40px;
     width: 300px;
     text-align: center;
@@ -22,15 +22,21 @@
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    background: #FFE3E3;
+    border: 1px solid #D291BC;
     border-radius: 5px;
     box-sizing: border-box;
+  }
+
+  .signup-form input:focus {
+    outline: none;
+    border-color: #F06292;
   }
   
   .signup-form button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #FF6F91;
     color: white;
     border: none;
     border-radius: 5px;
@@ -39,10 +45,10 @@
   }
   
   .signup-form button:hover {
-    background-color: #0056b3;
+    background-color: #FF85B3;
   }
   
   .signup-form p {
-    color: red;
+    color: #FF4081;
     margin-top: 10px;
   }

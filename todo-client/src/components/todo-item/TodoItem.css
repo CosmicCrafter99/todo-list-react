@@ -1,49 +1,91 @@
-.fas {
-    color: #2c2d2c;
-}
-
-.buttons-block {
-    display: flex;
-    gap: 5px;
-    flex-shrink: 0; /* Предотвращает сжатие контейнера с кнопками */
-}
-
-.task-title {
-    margin: 0;
-    font-size: 20px;
-    color: #2c2d2c;
-}
-
 .todo-item {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 8px;
-    padding: 16px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #FFB6C1;
+    border-radius: 8px;
     transition: background-color 0.3s ease;
-    word-wrap: break-word; /* Перенос длинных слов */
-    white-space: normal; /* Перенос текста */
+}
+
+.todo-item:not(.completed):hover {
+    background-color: #DB7093;
 }
 
 .left-section {
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Позволяет контейнеру расширяться */
+    flex-grow: 1;
+}
+
+.task-checkbox {
+    margin-right: 15px;
+    transform: scale(1.2);
+    align-self: flex-start;
+    margin-top: 5px;
+}
+
+.task-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .task-text {
-    margin-left: 10px;
-    word-wrap: break-word; /* Перенос длинных слов */
-    white-space: normal; /* Перенос текста */
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #333;
+}
+
+.task-deadline {
+    margin-top: 4px;
+    font-size: 0.9em;
+    color: #708090;
+}
+
+.task-deadline.overdue {
+    color: #FF4081;
+}
+
+.buttons-block {
+    display: flex;
+    gap: 10px;
+}
+
+.buttons-block button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.edit-section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .edit-input {
-    margin-left: 10px;
-    padding: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 1em;
     border: 1px solid #ddd;
-    border-radius: 3px;
-    flex-grow: 1; /* Позволяет полю ввода расширяться */
+    border-radius: 4px;
+    resize: none;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.edit-input:focus {
+    border-color: #FF1493;
+    outline: none;
+}
+
+.fas {
+    color: #2c2d2c;
 }

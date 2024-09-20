@@ -1,32 +1,37 @@
-
-
-.task-input {
+.todo-form {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px; /* Расстояние между элементами */
     margin-bottom: 20px;
+    padding: 24px;
+    border: 1px solid #C71585;
+    border-radius: 8px;
+    background: white;
 }
   
-.task-input input {
-    width: 75%;
+.task-input {
+    background: #FFE3E3;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #D291BC;
     border-radius: 5px;
+    font-size: 16px;
+}
+
+.task-input:focus {
+    outline: none;
+    border-color: #F06292;
 }
   
 .add-task-button {
-    width: 20%;
-    background-color: #007bff;
-    color: white;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #FF6F91;
+    color: #FFFFFF;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .add-task-button:hover {
-    width: 20%;
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #FF85B3;
 }

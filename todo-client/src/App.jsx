@@ -50,13 +50,14 @@ function App() {
   };
 
   // Добавление новой задачи
-  const addTask = async (taskText) => {
+  const addTask = async (taskText, deadline) => {
     const minOrder = tasks.length > 0 ? Math.min(...tasks.map(task => task.order)) : 0;
     const newTask = {
       text: taskText,
       completed: false,
       order: minOrder - 1,
-      userId: user.uid
+      userId: user.uid,
+      deadline: deadline || null // Добавление дедлайна
     };
     try {
       const res = await axios.post(API_URL, newTask);
@@ -140,7 +141,7 @@ function App() {
         user ? (
           <>
             <TodoFilter filter={filter} setFilter={setFilter} />
-            <TodoForm addTask={(value) => addTask(value)} />
+            <TodoForm addTask={(text, date) => addTask(text, date)} />
             {tasks.length > 0 && (
               <>
                 <TodoList tasks={incompleteTasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} updateTaskOrder={updateTaskOrder} />

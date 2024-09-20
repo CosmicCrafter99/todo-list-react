@@ -69,6 +69,7 @@ TodoList.propTypes = {
             _id: PropTypes.string.isRequired,
             text: PropTypes.string.isRequired,
             completed: PropTypes.bool.isRequired,
+            deadline: PropTypes.string,
         })
     ).isRequired,
     toggleComplete: PropTypes.func.isRequired,
