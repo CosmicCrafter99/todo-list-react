@@ -14,7 +14,7 @@ import './TodoList.css';
  * @param {function(Array): void} props.updateTaskOrder - Функция для обновления порядка задач.
  * @returns {JSX.Element} Компонент TodoList.
  */
-function TodoList({ tasks, toggleComplete, deleteTask, saveTask, updateTaskOrder }) {
+function TodoList({ tasks, updateTask, deleteTask, updateTaskOrder }) {
     const handleOnDragEnd = (result) => {
         if (!result.destination) return;
 
@@ -47,9 +47,8 @@ function TodoList({ tasks, toggleComplete, deleteTask, saveTask, updateTaskOrder
                                     >
                                         <TodoItem
                                             task={task}
-                                            toggleComplete={toggleComplete}
+                                            updateTask={updateTask}
                                             deleteTask={deleteTask}
-                                            saveTask={saveTask}
                                         />
                                     </div>
                                 )}
@@ -70,11 +69,11 @@ TodoList.propTypes = {
             text: PropTypes.string.isRequired,
             completed: PropTypes.bool.isRequired,
             deadline: PropTypes.string,
+            order: PropTypes.number.isRequired,
         })
     ).isRequired,
-    toggleComplete: PropTypes.func.isRequired,
+    updateTask: PropTypes.func.isRequired,
     deleteTask: PropTypes.func.isRequired,
-    saveTask: PropTypes.func.isRequired,
     updateTaskOrder: PropTypes.func.isRequired,
 };
 

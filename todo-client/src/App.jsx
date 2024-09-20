@@ -45,7 +45,7 @@ function App() {
       setTasks(sortedTasks);
     } catch (err) {
       console.log('Ошибка при получении задач:', err);
-      enqueueSnackbar('Ошибка при получении задач! Попробуйте чуть позже', { variant: 'error' });
+      enqueueSnackbar('Error fetching tasks! Please try again later', { variant: 'error' });
     }
   };
 
@@ -62,36 +62,10 @@ function App() {
     try {
       const res = await axios.post(API_URL, newTask);
       setTasks([res.data, ...tasks]);
-      enqueueSnackbar('Задача добавлена', { variant: 'success' });
+      enqueueSnackbar('Task added', { variant: 'success' });
     } catch (err) {
       console.log('Ошибка при добавлении задачи:', err);
-      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
-    }
-  };
-
-  // Обновление статуса задачи
-  const toggleComplete = async (id) => {
-    const task = tasks.find(t => t._id === id);
-    try {
-      const res = await axios.put(`${API_URL}/${id}/status`, { completed: !task.completed });
-      const updatedTask = res.data;
-      const updatedTasks = tasks.map(t => t._id === id ? updatedTask : t);
-
-      // Разделение задач на завершенные и незавершенные
-      const completedTasks = updatedTasks.filter(t => t.completed);
-      const incompleteTasks = updatedTasks.filter(t => !t.completed);
-
-      // Объединение задач с завершенными в начале
-      setTasks([...completedTasks, ...incompleteTasks]);
-
-      if (!task.completed) {
-        enqueueSnackbar('Задача завершена', { variant: 'success' });
-      } else {
-        enqueueSnackbar('Задача восстановлена', { variant: 'info' });
-      }
-    } catch (err) {
-      console.log('Ошибка при обновлении задачи:', err);
-      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
+      enqueueSnackbar('Error! Please try again later', { variant: 'error' });
     }
   };
 
@@ -100,21 +74,30 @@ function App() {
     try {
       await axios.delete(`${API_URL}/${id}`);
       setTasks(tasks.filter(task => task._id !== id));
-      enqueueSnackbar('Задача удалена', { variant: 'error' });
+      enqueueSnackbar('Task deleted', { variant: 'error' });
     } catch (err) {
       console.log('Ошибка при удалении задачи:', err);
-      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
+      enqueueSnackbar('Error! Please try again later', { variant: 'error' });
     }
   };
 
   // Сохранение измененной задачи
-  const saveTask = async (task) => {
+  const updateTask = async (updatedTask) => {
     try {
-      await axios.put(`${API_URL}/${task._id}/text`, { text: task.text });
-      setTasks(tasks.map(t => t._id === task._id ? task : t));
-      enqueueSnackbar('Задача изменена', { variant: 'info' });
+      const res = await axios.put(`${API_URL}/${updatedTask._id}`, updatedTask);
+      const newTasks = tasks.map(t => t._id === updatedTask._id ? res.data : t);
+      setTasks(newTasks);
+
+      const originalTask = tasks.find(t => t._id === updatedTask._id);
+      if (updatedTask.completed !== undefined && originalTask.completed !== updatedTask.completed) {
+        const message = updatedTask.completed ? 'Задача завершена' : 'Задача восстановлена';
+        const variant = updatedTask.completed ? 'success' : 'info';
+        enqueueSnackbar(message, { variant });
+      } else {
+        enqueueSnackbar('Задача обновлена', { variant: 'success' });
+      }
     } catch (err) {
-      console.log('Ошибка при сохранении задачи:', err);
+      console.log('Ошибка при обновлении задачи:', err);
       enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
     }
   };
@@ -124,10 +107,10 @@ function App() {
     setTasks([...newTasks, ...completeTasks]);
     try {
       await axios.put(`${API_URL}/${user.uid}/order`, { tasks: newTasks });
-      enqueueSnackbar('Порядок задач обновлен', { variant: 'info' });
+      enqueueSnackbar('Task order updated', { variant: 'info' });
     } catch (err) {
       console.log('Ошибка при обновлении порядка задач:', err);
-      enqueueSnackbar('Ошибка! Попробуйте чуть позже', { variant: 'error' });
+      enqueueSnackbar('Error! Please try again later', { variant: 'error' });
     }
   };
 
@@ -144,7 +127,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1 className='header-title'>To Do List</h1>
-        {user && <button className="logout-button" onClick={handleSignOut}>Выйти</button>}
+        {user && <button className="logout-button" onClick={handleSignOut}>Sign out</button>}
       </header>
       {
         user ? (
@@ -153,9 +136,9 @@ function App() {
             <TodoForm addTask={(text, date) => addTask(text, date)} />
             {tasks.length > 0 && (
               <>
-                <TodoList tasks={incompleteTasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} updateTaskOrder={updateTaskOrder} />
-                {filter !== 'incomplete' && <h2>Завершенные задачи</h2>}
-                <TodoList tasks={completeTasks} toggleComplete={toggleComplete} deleteTask={deleteTask} saveTask={saveTask} updateTaskOrder={() => { }} />
+                <TodoList tasks={incompleteTasks} updateTask={updateTask} deleteTask={deleteTask} updateTaskOrder={updateTaskOrder} />
+                {filter !== 'incomplete' && <h2>Completed tasks</h2>}
+                <TodoList tasks={completeTasks} updateTask={updateTask} deleteTask={deleteTask} updateTaskOrder={() => { }} />
               </>
             )}
           </>

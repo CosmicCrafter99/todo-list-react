@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import './TodoItem.css';
@@ -15,11 +15,13 @@ import './TodoItem.css';
  * @param {function(): void} props.saveTask - Функция для сохранения задачи.
  * @returns {JSX.Element} Компонент TodoItem.
  */
-const TodoItem = ({ task, toggleComplete, deleteTask, saveTask }) => {
+const TodoItem = ({ task, updateTask, deleteTask }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedText, setEditedText] = useState(task.text);
-    const [editedDeadline, setEditedDeadline] = useState(task.deadline);
+    const [editedDeadline, setEditedDeadline] = useState(task.deadline ? task.deadline.split('T')[0] : '');
+    const [editedTime, setEditedTime] = useState(task.deadline ? task.deadline.split('T')[1].slice(0, 5) : '');
     const textareaRef = useRef(null);
+
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
@@ -30,40 +32,47 @@ const TodoItem = ({ task, toggleComplete, deleteTask, saveTask }) => {
     }, [isEditing, editedText]);
 
     const handleCheckboxChange = () => {
-        toggleComplete(task._id);
-    };
-
-    const getTodayDate = () => {
-        const today = new Date();
-        const day = String(today.getDate()).padStart(2, '0');
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const year = today.getFullYear();
-        return `${year}-${month}-${day}`;
+        updateTask({ ...task, completed: !task.completed });
     };
 
     const handleSave = () => {
-        saveTask({ ...task, text: editedText, deadline: editedDeadline });
+        const deadline = editedDeadline && editedTime ? `${editedDeadline}T${editedTime}:00` : editedDeadline;
+
+        if (deadline && new Date(deadline) < new Date()) {
+            enqueueSnackbar('Cannot set a deadline in the past', { variant: 'error' });
+            return;
+        }
+
+        updateTask({ ...task, text: editedText, deadline });
         setIsEditing(false);
     };
 
     const handleEdit = () => {
         setIsEditing(true);
         setEditedText(task.text);
-        setEditedDeadline(task.deadline);
+        setEditedDeadline(task.deadline ? task.deadline.split('T')[0] : '');
+        setEditedTime(task.deadline ? task.deadline.split('T')[1].slice(0, 5) : '');
     };
 
     const handleCopy = () => {
         navigator.clipboard.writeText(task.text).then(() => {
             console.log('Текст задачи скопирован в буфер обмена');
-            enqueueSnackbar('Текст задачи скопирован в буфер обмена', { variant: 'success' });
         }).catch(err => {
             console.log('Ошибка при копировании текста:', err);
-            enqueueSnackbar('Ошибка при копировании текста! Попробуйте еще раз', {
-                variant: 'error'
-            });
         });
     };
 
+    const getTodayDateTime = () => {
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = today.getFullYear();
+        return {
+            date: `${year}-${month}-${day}`,
+        };
+    };
+
+    const { date: minDate } = getTodayDateTime();
     const isDeadlineOverdue = task.deadline && new Date(task.deadline) < new Date();
 
     return (
@@ -80,10 +89,16 @@ const TodoItem = ({ task, toggleComplete, deleteTask, saveTask }) => {
                         />
                         <input
                             type="date"
-                            value={editedDeadline ? editedDeadline.split('T')[0] : ''}
+                            value={editedDeadline}
                             onChange={(e) => setEditedDeadline(e.target.value)}
                             className="edit-input"
-                            min={getTodayDate()}
+                            min={minDate}
+                        />
+                        <input
+                            type="time"
+                            value={editedTime}
+                            onChange={(e) => setEditedTime(e.target.value)}
+                            className="edit-input"
                         />
                     </div>
                 ) : (
@@ -94,12 +109,11 @@ const TodoItem = ({ task, toggleComplete, deleteTask, saveTask }) => {
                             onChange={handleCheckboxChange}
                             className='task-checkbox'
                         />
-
                         <div className="task-details">
                             <span className='task-text'>{task.text}</span>
                             {task.deadline && (
-                                <span className={`task-deadline ${isDeadlineOverdue ? 'overdue' : ''}`}>
-                                    Дедлайн: {new Date(task.deadline).toLocaleDateString()}
+                                <span className={`task-deadline ${isDeadlineOverdue && !task.completed ? 'overdue' : ''}`}>
+                                    Deadline: {new Date(task.deadline).toLocaleString()}
                                 </span>
                             )}
                         </div>
@@ -131,9 +145,8 @@ TodoItem.propTypes = {
         completed: PropTypes.bool.isRequired,
         deadline: PropTypes.string,
     }).isRequired,
-    toggleComplete: PropTypes.func.isRequired,
+    updateTask: PropTypes.func.isRequired,
     deleteTask: PropTypes.func.isRequired,
-    saveTask: PropTypes.func.isRequired,
 };
 
 export default TodoItem;

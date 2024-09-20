@@ -25,15 +25,15 @@ function SignUp() {
     const handleSignUp = async (e) => {
         e.preventDefault();
         if (!validateEmail(email)) {
-            setError('Некорректный email');
+            setError('Invalid email');
             return;
         }
         if (!validatePassword(password)) {
-            setError('Пароль должен быть не менее 6 символов');
+            setError('Password must be at least 6 characters');
             return;
         }
         if (password !== confirmPassword) {
-            setError('Пароли не совпадают');
+            setError('Passwords do not match');
             return;
         }
         try {
@@ -42,19 +42,19 @@ function SignUp() {
         } catch (err) {
             switch (err.code) {
                 case 'auth/email-already-in-use':
-                    setError('Этот email уже используется.');
+                    setError('This email is already in use.');
                     break;
                 case 'auth/invalid-email':
-                    setError('Некорректный email.');
+                    setError('Invalid email.');
                     break;
                 case 'auth/operation-not-allowed':
-                    setError('Регистрация с email временно отключена.');
+                    setError('Email registration is temporarily disabled.');
                     break;
                 case 'auth/weak-password':
-                    setError('Пароль слишком слабый.');
+                    setError('Password is too weak.');
                     break;
                 default:
-                    setError('Произошла ошибка при регистрации. Попробуйте еще раз.');
+                    setError('An error occurred during registration. Please try again.');
             }
         }
     };
@@ -62,7 +62,7 @@ function SignUp() {
     return (
         <div className="signup-container">
             <div className="signup-form">
-                <h2>Регистрация</h2>
+                <h2>Sign Up</h2>
                 <form onSubmit={handleSignUp}>
                     <input
                         type="email"
@@ -72,17 +72,17 @@ function SignUp() {
                     />
                     <input
                         type="password"
-                        placeholder="Пароль"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <input
                         type="password"
-                        placeholder="Подтвердите пароль"
+                        placeholder="Confirm Password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
-                    <button type="submit">Зарегистрироваться</button>
+                    <button type="submit">Sign Up</button>
                 </form>
                 {error && <p>{error}</p>}
             </div>

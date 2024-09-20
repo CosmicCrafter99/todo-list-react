@@ -1,37 +1,40 @@
 .todo-form {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Расстояние между элементами */
+    gap: 10px;
     margin-bottom: 20px;
     padding: 24px;
     border: 1px solid #C71585;
     border-radius: 8px;
     background: white;
 }
-  
-.task-input {
-    background: #FFE3E3;
+
+.todo-input {
     padding: 10px;
+    font-size: 1em;
     border: 1px solid #D291BC;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.task-input:focus {
-    outline: none;
-    border-color: #F06292;
-}
-  
-.add-task-button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #FF6F91;
-    color: #FFFFFF;
-    border: none;
-    cursor: pointer;
+    background: #FFE3E3;
     border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
 }
 
-.add-task-button:hover {
+.todo-input:focus-visible {
+    border-color: #D291BC;
+    outline: none;
+}
+
+.todo-button {
+    padding: 10px;
+    font-size: 1em;
+    color: #FFFFFF;
+    background-color: #FF6F91;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.todo-button:hover {
     background-color: #FF85B3;
 }

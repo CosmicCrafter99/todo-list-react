@@ -41,12 +41,12 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Обновление статуса задачи
-router.put('/:id/text', async (req, res) => {
+// Обновление задачи
+router.put('/:id', async (req, res) => {
     try {
         const updatedTodo = await Todo.findByIdAndUpdate(
             req.params.id,
-            { text: req.body.text },
+            { ...req.body },
             { new: true }
         );
         res.json(updatedTodo);

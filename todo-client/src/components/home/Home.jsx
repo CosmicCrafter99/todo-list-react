@@ -15,8 +15,8 @@ function Home() {
 
     return (
         <div className="home-container">
-            <button className="home-button" onClick={openSignInModal}>Войти</button>
-            <button className="home-button" onClick={openSignUpModal}>Зарегистрироваться</button>
+            <button className="home-button" onClick={openSignInModal}>Sign in</button>
+            <button className="home-button" onClick={openSignUpModal}>Sign up</button>
 
             {isSignInOpen && (
                 <div className="modal-overlay">

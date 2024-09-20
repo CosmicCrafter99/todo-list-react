@@ -20,22 +20,25 @@ function SignIn() {
         } catch (err) {
             switch (err.code) {
                 case 'auth/invalid-email':
-                    setError('Некорректный формат email.');
+                    setError('Invalid email format.');
                     break;
                 case 'auth/user-disabled':
-                    setError('Этот пользователь был отключен.');
+                    setError('This user has been disabled.');
                     break;
                 case 'auth/user-not-found':
-                    setError('Пользователь с таким email не найден.');
+                    setError('No user found with this email.');
                     break;
                 case 'auth/wrong-password':
-                    setError('Неверный пароль.');
+                    setError('Incorrect password.');
                     break;
                 case 'auth/invalid-credential':
-                    setError('Неверные учетные данные.');
+                    setError('Invalid credentials.');
+                    break;
+                case 'auth/missing-password':
+                    setError('Password is missing.');
                     break;
                 default:
-                    setError('Ошибка при входе: ' + err.message);
+                    setError('Sign-in error: ' + err.message);
             }
         }
     };
@@ -43,7 +46,7 @@ function SignIn() {
     return (
         <div className="signin-container">
             <div className="signin-form">
-                <h2>Вход</h2>
+                <h2>Sign In</h2>
                 <form onSubmit={handleSignIn}>
                     <input
                         type="email"
@@ -53,11 +56,11 @@ function SignIn() {
                     />
                     <input
                         type="password"
-                        placeholder="Пароль"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button type="submit">Войти</button>
+                    <button type="submit">Sign In</button>
                 </form>
                 {error && <p>{error}</p>}
             </div>

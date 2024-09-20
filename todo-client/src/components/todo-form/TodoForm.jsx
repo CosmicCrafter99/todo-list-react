@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSnackbar } from 'notistack';
 import './TodoForm.css';
 
 /**
@@ -8,47 +9,68 @@ import './TodoForm.css';
  * @param {function(string): void} props.addTask - Функция для добавления новой задачи.
  * @returns {JSX.Element} Компонент TodoForm.
  */
-function TodoForm({ addTask }) {
-    const [task, setTask] = useState('');
-    const [taskDeadline, setTaskDeadline] = useState('');
+const TodoForm = ({ addTask }) => {
+    const [text, setText] = useState('');
+    const [deadlineDate, setDeadlineDate] = useState('');
+    const [deadlineTime, setDeadlineTime] = useState('');
+
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (task.trim()) {
-            addTask(task, taskDeadline);
-            setTask('');
-            setTaskDeadline('');
+        if (!text.trim()) return;
+
+        const deadline = deadlineDate && deadlineTime ? `${deadlineDate}T${deadlineTime}:00` : deadlineDate;
+
+        if (deadline && new Date(deadline) < new Date()) {
+            enqueueSnackbar('Cannot set a deadline in the past', { variant: 'error' });
+            return;
         }
+
+        addTask(text, deadline);
+        setText('');
+        setDeadlineDate('');
+        setDeadlineTime('');
     };
 
-    const getTodayDate = () => {
+    const getTodayDateTime = () => {
         const today = new Date();
         const day = String(today.getDate()).padStart(2, '0');
         const month = String(today.getMonth() + 1).padStart(2, '0');
         const year = today.getFullYear();
-        return `${year}-${month}-${day}`;
+        return {
+            date: `${year}-${month}-${day}`,
+        };
     };
 
+    const { date: minDate } = getTodayDateTime();
+
     return (
-        <form onSubmit={handleSubmit} className='todo-form'>
+        <form className="todo-form" onSubmit={handleSubmit}>
             <input
                 type="text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
                 placeholder="Add a new task..."
-                className="task-input"
-                value={task}
-                onChange={(e) => setTask(e.target.value)}
+                className="todo-input"
             />
             <input
                 type="date"
-                value={taskDeadline}
-                onChange={(e) => setTaskDeadline(e.target.value)}
-                className="task-input"
-                min={getTodayDate()}
+                value={deadlineDate}
+                onChange={(e) => setDeadlineDate(e.target.value)}
+                className="todo-input"
+                min={minDate}
             />
-            <button className='add-task-button'>Add Task</button>
+            <input
+                type="time"
+                value={deadlineTime}
+                onChange={(e) => setDeadlineTime(e.target.value)}
+                className="todo-input"
+            />
+            <button type="submit" className="todo-button">Add Task</button>
         </form>
     );
-}
+};
 
 TodoForm.propTypes = {
     addTask: PropTypes.func.isRequired,
