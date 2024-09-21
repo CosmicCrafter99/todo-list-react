@@ -9,20 +9,6 @@
     background: white;
 }
 
-/* Адаптивные стили */
-@media (max-width: 768px) {
-    .todo-form {
-        padding: 40px;
-    }
-}
-
-@media (max-width: 480px) {
-    .todo-form {
-        padding: 20px;
-        gap: 5px;
-    }
-}
-
 .todo-input {
     padding: 10px;
     font-size: 1em;
@@ -58,4 +44,36 @@
     margin-bottom: 20px;
     font-size: 1.5em;
     text-align: center;
-  }
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .todo-form {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .todo-form {
+        padding: 20px;
+        gap: 5px;
+    }
+}
+
+/* Стили для десктопа */
+@media (min-width: 1024px) {
+    .todo-form {
+        padding: 100px;
+        gap: 20px;
+    }
+    
+    .todo-input {
+        padding: 15px;
+        font-size: 1.2em;
+    }
+
+    .todo-button {
+        padding: 15px;
+        font-size: 1.2em;
+    }
+}

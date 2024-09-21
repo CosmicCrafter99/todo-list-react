@@ -157,3 +157,11 @@ button i {
     right: 5px;
   }
 }
+
+/* Стили для десктопа */
+@media (min-width: 1024px) {
+  .task-close-button {
+    right: 20px;
+    font-size: 3em;
+  }
+}
