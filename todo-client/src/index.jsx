@@ -4,12 +4,15 @@ import { SnackbarProvider } from 'notistack';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthProvider } from './features/auth/model/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <SnackbarProvider maxSnack={3}>
-    <App />
-  </SnackbarProvider>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </SnackbarProvider >
 );
 
 // If you want to start measuring performance in your app, pass a function

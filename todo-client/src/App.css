@@ -7,35 +7,6 @@
   font-family: 'Arial', sans-serif;
 }
 
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #C71585;
-  margin-bottom: 20px;
-}
-
-.header-title {
-  flex-grow: 1;
-  text-align: center;
-  margin: 0;
-}
-
-.logout-button {
-  background-color: #FF6F91;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.logout-button:hover {
-  background-color: #FF85B3;
-}
-
 .task {
   display: flex;
   justify-content: space-between;
@@ -49,63 +20,12 @@
   color: #999;
 }
 
-button {
-  background-color: #FF6F91;
-  cursor: pointer;
-  color: #FFFFFF;
-}
-
 button i {
   font-size: 1.2em;
 }
 
 .MuiSnackbar-root {
   z-index: 1400;
-}
-
-.task-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.task-modal {
-  position: relative;
-}
-
-.task-close-button {
-  color: #FF6F91;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  position: absolute;
-  right: 10px;
-}
-
-.task-close-button:hover,
-.task-close-button:focus {
-  color: #FF85B3;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.add-task-button {
-  padding: 10px 20px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-.add-task-button:hover {
-  background-color: #FF85B3;
 }
 
 .filter-add-task-container {
@@ -117,11 +37,6 @@ button i {
 
 /* Адаптивные стили */
 @media (max-width: 768px) {
-  .app-header {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .filter-add-task-container {
     flex-direction: column;
     align-items: center;
@@ -133,35 +48,12 @@ button i {
 
   .add-task-button {
     width: 100%;
-    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
-  .header-title {
-    font-size: 20px;
-  }
-
-  .logout-button, .add-task-button {
-    font-size: 14px;
-    padding: 8px 16px;
-  }
-
   .todo-filter select {
     font-size: 14px;
     padding: 4px;
-  }
-
-  .task-close-button {
-    font-size: 24px;
-    right: 5px;
-  }
-}
-
-/* Стили для десктопа */
-@media (min-width: 1024px) {
-  .task-close-button {
-    right: 20px;
-    font-size: 3em;
   }
 }

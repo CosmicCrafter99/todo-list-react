@@ -1,0 +1,25 @@
+.shared-icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.shared-icon-button:hover {
+    color: #FF85B3;
+}
+
+.fas {
+    color: #2c2d2c;
+}
+
+.fas:hover {
+    color: #8c264d;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+    .fas {
+        font-size: 1.1em;
+    }
+}

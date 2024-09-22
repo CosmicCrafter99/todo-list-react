@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import './TodoItem.css';
+import IconButton from '../../shared/ui/icon-button/IconButton';
+import { getIsDeadlineOverdue } from '../../shared/lib/getIsDeadlineOverdue';
+import { formatDeadline } from '../../shared/lib/formatDeadline';
+import { Input } from '../../shared/ui/input/Input';
 
 /**
  * Компонент отдельной задачи.
@@ -22,7 +26,6 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
     const [editedTime, setEditedTime] = useState(task.deadline && task.deadline.includes('T') ? task.deadline.split('T')[1].slice(0, 5) : '');
     const textareaRef = useRef(null);
     const descriptionRef = useRef(null);
-
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
@@ -44,14 +47,15 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
     };
 
     const handleSave = () => {
-        const deadline = editedDeadline && editedTime ? `${editedDeadline}T${editedTime}:00` : editedDeadline;
+        const formatedDeadline = formatDeadline(editedDeadline, editedTime);
+        const isDeadlineOverdue = formatedDeadline ? getIsDeadlineOverdue(formatedDeadline) : false;
 
-        if (deadline && new Date(deadline) < new Date()) {
+        if (isDeadlineOverdue) {
             enqueueSnackbar('Cannot set a deadline in the past', { variant: 'error' });
             return;
         }
 
-        updateTask({ ...task, text: editedText, deadline });
+        updateTask({ ...task, text: editedText, description: editedDescription, deadline: formatedDeadline });
         setIsEditing(false);
     };
 
@@ -60,7 +64,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
         setEditedText(task.text);
         setEditedDescription(task.description || '');
         setEditedDeadline(task.deadline ? task.deadline?.split('T')[0] : '');
-        setEditedTime(task.deadline ? task.deadline?.split('T')[1].slice(0, 5) : '');
+        setEditedTime(task.deadline && task.deadline.includes('T') ? task.deadline.split('T')[1].slice(0, 5) : '');
     };
 
     const handleCopy = () => {
@@ -89,21 +93,23 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
     };
 
     const { date: minDate, time: minTime } = getTodayDateTime();
-    const isDeadlineOverdue = task.deadline && new Date(task.deadline) < new Date();
+    const isDeadlineOverdue = task.deadline ? getIsDeadlineOverdue(task.deadline) : false;
 
     return (
         <li className={`todo-item ${task.completed ? 'completed' : ''}`}>
             <div className="left-section">
                 {isEditing ? (
                     <div className="edit-section">
-                        <textarea
-                            ref={textareaRef}
+                        <Input
                             value={editedText}
                             onChange={(e) => setEditedText(e.target.value)}
                             className="edit-input"
+                            placeholder='Add a task...'
+                            ref={textareaRef}
                             rows="1"
                         />
-                        <textarea
+                        <Input
+                            type="textarea"
                             ref={descriptionRef}
                             value={editedDescription}
                             onChange={(e) => setEditedDescription(e.target.value)}
@@ -111,7 +117,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
                             placeholder='Add a description...'
                             rows="3"
                         />
-                        <input
+                        <Input
                             type="date"
                             value={editedDeadline}
                             onChange={(e) => setEditedDeadline(e.target.value)}
@@ -119,7 +125,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
                             placeholder='Add a deadline date...'
                             min={minDate}
                         />
-                        <input
+                        <Input
                             type="time"
                             value={editedTime}
                             onChange={(e) => setEditedTime(e.target.value)}
@@ -130,7 +136,7 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
                     </div>
                 ) : (
                     <>
-                        <input
+                        <Input
                             type="checkbox"
                             checked={task.completed}
                             onChange={handleCheckboxChange}
@@ -153,14 +159,16 @@ const TodoItem = ({ task, deleteTask, updateTask }) => {
             <div className='buttons-block'>
                 {isEditing ? (
                     <>
-                        <button onClick={handleSave} title="Save"><i className="fas fa-check"></i></button>
-                        <button onClick={() => setIsEditing(false)} title="Cancel"><i className="fas fa-times"></i></button>
+                        <IconButton onClick={handleSave} title="Save" icon="fas fa-check" />
+                        <IconButton onClick={() => setIsEditing(false)} title="Cancel" icon="fas fa-times" />
                     </>
                 ) : (
                     <>
-                        <button onClick={handleCopy} title="Copy"><i className="fas fa-copy"></i></button>
-                        {!task.completed && <button onClick={handleEdit} title="Edit"><i className="fas fa-edit"></i></button>}
-                        <button onClick={() => deleteTask(task._id)} title="Delete"><i className="fas fa-trash"></i></button>
+                        <IconButton onClick={handleCopy} title="Copy" icon="fas fa-copy" />
+                        {
+                            !task.completed && <IconButton onClick={handleEdit} title="Edit" icon="fas fa-edit" />
+                        }
+                        <IconButton onClick={() => deleteTask(task._id)} title="Delete" icon="fas fa-trash" />
                     </>
                 )}
             </div>

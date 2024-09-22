@@ -1,22 +1,26 @@
 import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
-import './SignIn.css';
+import './Authorization.css';
+import { Input } from '../../../shared/ui/input/Input';
+import { useAuth } from '../model/AuthContext';
+import Button from '../../../shared/ui/button/Button';
+import { auth } from '../../../shared/api/firebase';
 
 /**
  * Компонент для входа в систему
  * @component
  */
-function SignIn() {
+function SignIn({ onClose }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const { signIn } = useAuth();
 
     const handleSignIn = async (e) => {
         e.preventDefault();
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            await signIn(auth, email, password);
             setError('');
+            onClose();
         } catch (err) {
             switch (err.code) {
                 case 'auth/invalid-email':
@@ -44,24 +48,26 @@ function SignIn() {
     };
 
     return (
-        <div className="signin-form">
-            <h2>Sign In</h2>
-            <form onSubmit={handleSignIn}>
-                <input
+        <div className="authorization-form-wrapper">
+            <h2 className='authorization-title'>Sign In</h2>
+            <form onSubmit={handleSignIn} className='authorization-form'>
+                <Input
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className='authorization-input'
                 />
-                <input
+                <Input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className='authorization-input'
                 />
-                <button type="submit">Sign In</button>
+                <Button type="submit" className='authorization-button'>Sign In</Button>
             </form>
-            {error && <p>{error}</p>}
+            {error && <p className='authorization-error'>{error}</p>}
         </div>
     );
 }

@@ -1,0 +1,52 @@
+.authorization-form-wrapper {
+    padding: 80px 80px 100px;
+    margin: auto;
+    max-width: 450px;
+  }
+  
+  .authorization-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .authorization-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #D291BC;
+    background: #FFE3E3;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  .authorization-input:focus {
+    outline: none;
+    border-color: #F06292;
+  }
+  
+  .authorization-error {
+    color: #FF4081;
+    margin-top: 10px;
+  }
+
+.authorization-button {
+  width: 100%;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+  .authorization-title {
+      font-size: 2em;
+  }
+
+  .authorization-input {
+      font-size: 0.9em;
+      padding: 8px;
+  }
+
+  .authorization-form-wrapper {
+    width: 200px;
+    padding: 20px 20px 40px;
+  }
+}

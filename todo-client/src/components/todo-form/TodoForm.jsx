@@ -2,6 +2,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import './TodoForm.css';
+import Button from '../../shared/ui/button/Button';
+import { getIsDeadlineOverdue } from '../../shared/lib/getIsDeadlineOverdue';
+import { formatDeadline } from '../../shared/lib/formatDeadline';
+import { Input } from '../../shared/ui/input/Input';
 
 /**
  * Компонент формы для добавления новой задачи.
@@ -24,32 +28,18 @@ const TodoForm = ({ addTask }) => {
             return;
         }
 
-        let deadline = deadlineDate;
+        const formatedDeadline = formatDeadline(deadlineDate, deadlineTime);
 
-        if (deadlineTime) {
-            const today = new Date();
-            const [hours, minutes] = deadlineTime.split(':');
-            today.setHours(hours, minutes, 0, 0);
+        if (formatedDeadline) {
+            const isDeadlineOverdue = formatedDeadline ? getIsDeadlineOverdue(formatedDeadline) : false;
 
-            if (deadlineDate) {
-                deadline = `${deadlineDate}T${deadlineTime}:00`;
-            } else {
-                if (today < new Date()) {
-                    today.setDate(today.getDate() + 1);
-                }
-                const day = String(today.getDate()).padStart(2, '0');
-                const month = String(today.getMonth() + 1).padStart(2, '0');
-                const year = today.getFullYear();
-                deadline = `${year}-${month}-${day}T${deadlineTime}:00`;
+            if (isDeadlineOverdue) {
+                enqueueSnackbar('Cannot set a deadline in the past', { variant: 'error' });
+                return;
             }
         }
 
-        if (deadline && new Date(deadline) < new Date()) {
-            enqueueSnackbar('Cannot set a deadline in the past', { variant: 'error' });
-            return;
-        }
-
-        addTask({ text, deadline, description });
+        addTask({ text, deadline: formatedDeadline, description });
         setText('');
         setDescription('');
         setDeadlineDate('');
@@ -71,36 +61,41 @@ const TodoForm = ({ addTask }) => {
     return (
         <form className="todo-form" onSubmit={handleSubmit}>
             <h2 className='task-form-title'>Add Task</h2>
-            <input
-                type="text"
+            <Input
+                type={"text"}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="Add a new task..."
+                placeholder={"Add a new task..."}
                 className="todo-input"
+                size={'l'}
             />
-            <textarea
+            <Input
+                type={"textarea"}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Add a description..."
+                placeholder={"Add a description..."}
                 className="todo-input"
                 rows="3"
+                size={'l'}
             />
-            <input
-                type="date"
+            <Input
+                type={"date"}
                 value={deadlineDate}
                 onChange={(e) => setDeadlineDate(e.target.value)}
+                placeholder={"Add a deadline date..."}
                 className="todo-input"
-                placeholder='Add a deadline date...'
                 min={minDate}
+                size={'l'}
             />
-            <input
-                type="time"
+            <Input
+                type={"time"}
                 value={deadlineTime}
                 onChange={(e) => setDeadlineTime(e.target.value)}
-                placeholder='Add a deadline time...'
+                placeholder={"Add a deadline time..."}
                 className="todo-input"
+                size={'l'}
             />
-            <button type="submit" className="todo-button">Add Task</button>
+            <Button type="submit" className='todo-button'>Add Task</Button>
         </form>
     );
 };

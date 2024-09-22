@@ -1,0 +1,23 @@
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.home-button {
+  margin-right: 20px;
+}
+.home-button:last-child {
+  margin-right: 0;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+    .home-title {
+        font-size: 2em;
+    }
+
+    .home-description {
+        font-size: 1em;
+    }
+}

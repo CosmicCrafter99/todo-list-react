@@ -4,39 +4,6 @@
     gap: 10px;
     margin-bottom: 20px;
     padding: 80px;
-    border: 1px solid #C71585;
-    border-radius: 8px;
-    background: white;
-}
-
-.todo-input {
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #D291BC;
-    background: #FFE3E3;
-    border-radius: 4px;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-}
-
-.todo-input:focus-visible {
-    border-color: #D291BC;
-    outline: none;
-}
-
-.todo-button {
-    padding: 10px;
-    font-size: 1em;
-    color: #FFFFFF;
-    background-color: #FF6F91;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.todo-button:hover {
-    background-color: #FF85B3;
 }
 
 .task-form-title {
@@ -63,17 +30,7 @@
 /* Стили для десктопа */
 @media (min-width: 1024px) {
     .todo-form {
-        padding: 100px;
+        padding: 96px;
         gap: 20px;
-    }
-    
-    .todo-input {
-        padding: 15px;
-        font-size: 1.2em;
-    }
-
-    .todo-button {
-        padding: 15px;
-        font-size: 1.2em;
     }
 }

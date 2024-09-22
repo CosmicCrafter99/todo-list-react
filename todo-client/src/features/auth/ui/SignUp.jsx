@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
-import './SignUp.css';
+import './Authorization.css';
+import Button from '../../../shared/ui/button/Button';
+import { Input } from '../../../shared/ui/input/Input';
+import { useAuth } from '../model/AuthContext';
+import { auth } from '../../../shared/api/firebase';
 
 /**
  * Компонент регистрации пользователя
  * @component
  */
-function SignUp() {
+function SignUp({ onClose }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const { signUp } = useAuth();
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,8 +40,9 @@ function SignUp() {
             return;
         }
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            await signUp(auth, email, password);
             setError('');
+            onClose();
         } catch (err) {
             switch (err.code) {
                 case 'auth/email-already-in-use':
@@ -60,30 +64,33 @@ function SignUp() {
     };
 
     return (
-        <div className="signup-form">
-            <h2>Sign Up</h2>
-            <form onSubmit={handleSignUp}>
-                <input
+        <div className="authorization-form-wrapper">
+            <h2 className='authorization-title'>Sign Up</h2>
+            <form onSubmit={handleSignUp} className='authorization-form'>
+                <Input
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className='authorization-input'
                 />
-                <input
+                <Input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className='authorization-input'
                 />
-                <input
+                <Input
                     type="password"
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    className='authorization-input'
                 />
-                <button type="submit">Sign Up</button>
+                <Button type="submit" className='authorization-button'>Sign Up</Button>
             </form>
-            {error && <p>{error}</p>}
+            {error && <p className='authorization-error'>{error}</p>}
         </div>
     );
 }

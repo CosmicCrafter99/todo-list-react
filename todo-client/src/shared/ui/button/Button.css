@@ -1,0 +1,23 @@
+.shared-button {
+    font-size: 16px;
+    background-color: #FF6F91;
+    text-align: center;
+    cursor: pointer;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    padding: 10px 20px;
+}
+
+.shared-button:hover {
+    background-color: #FF85B3;
+}
+
+@media (max-width: 480px) {
+    .add-task-button {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+}
