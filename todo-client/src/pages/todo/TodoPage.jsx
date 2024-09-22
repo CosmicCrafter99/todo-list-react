@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
-import TodoFilter from '../../components/todo-filter/TodoFilter';
+import TodoFilter from '../../features/todo-filter/TodoFilter';
 import Button from '../../shared/ui/button/Button';
-import TodoList from '../../components/todo-list/TodoList';
+import TodoList from '../../features/todo-list/TodoList';
 import { deleteTask } from '../../shared/api/deleteTask';
 import { putTask } from '../../shared/api/putTask';
 import { putOrder } from '../../shared/api/putOrder';
@@ -11,7 +11,7 @@ import { postTask } from '../../shared/api/postTask';
 import { useAuth } from '../../features/auth/model/AuthContext';
 import { filterTasks } from '../../shared/lib/filterTasks';
 import Modal from '../../shared/ui/modal/Modal';
-import TodoForm from '../../components/todo-form/TodoForm';
+import TodoForm from '../../features/todo-form/TodoForm';
 
 const TodoPage = () => {
     const [tasks, setTasks] = useState([]);

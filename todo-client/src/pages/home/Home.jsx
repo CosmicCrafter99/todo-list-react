@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SignIn from '../../features/auth/ui/SignIn';
 import SignUp from '../../features/auth/ui/SignUp';
 import Modal from '../../shared/ui/modal/Modal';
 import Button from '../../shared/ui/button/Button';
+import { useAuth } from '../../features/auth/model/AuthContext';
 import './Home.css';
 
 function Home() {
     const [isSignInOpen, setIsSignInOpen] = useState(false);
     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
     const openSignInModal = () => {
         setIsSignInOpen(true);
@@ -21,6 +25,11 @@ function Home() {
     }
     const closeSignUpModal = () => {
         setIsSignUpOpen(false);
+    }
+
+    if (user) {
+        navigate('/todo');
+        return null;
     }
 
     return (

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { SnackbarProvider } from 'notistack';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './app/styles/index.css';
+import App from './app/App';
+import reportWebVitals from './shared/config/reportWebVitals';
 import { AuthProvider } from './features/auth/model/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,7 +12,7 @@ root.render(
     <AuthProvider>
       <App />
     </AuthProvider>
-  </SnackbarProvider >
+  </SnackbarProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

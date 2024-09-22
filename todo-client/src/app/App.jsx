@@ -1,7 +1,7 @@
-import Home from './pages/home/Home';
-import AppHeader from './shared/ui/app-header/AppHeader';
-import TodoPage from './pages/todo/TodoPage';
-import './App.css';
+import Home from '../pages/home/Home';
+import AppHeader from '../shared/ui/app-header/AppHeader';
+import TodoPage from '../pages/todo/TodoPage';
+import './styles/App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 /**

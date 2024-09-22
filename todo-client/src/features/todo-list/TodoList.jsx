@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import TodoItem from '../todo-item/TodoItem';
+import TodoItem from './TodoItem';
 import './TodoList.css';
 
 /**
