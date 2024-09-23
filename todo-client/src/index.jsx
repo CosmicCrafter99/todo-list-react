@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import './app/styles/index.css';
 import App from './app/App';
 import reportWebVitals from './shared/config/reportWebVitals';
 import { AuthProvider } from './features/auth/model/AuthContext';
+import store from './app/store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <SnackbarProvider maxSnack={3}>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Provider>
   </SnackbarProvider>
 );
 

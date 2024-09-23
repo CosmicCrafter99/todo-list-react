@@ -2,10 +2,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import './TodoForm.css';
-import Button from '../../shared/ui/button/Button';
-import { getIsDeadlineOverdue } from '../../shared/lib/getIsDeadlineOverdue';
-import { formatDeadline } from '../../shared/lib/formatDeadline';
-import { Input } from '../../shared/ui/input/Input';
+import Button from '../../../../shared/ui/button/Button';
+import { getIsDeadlineOverdue } from '../../../../shared/lib/getIsDeadlineOverdue';
+import { formatDeadline } from '../../../../shared/lib/formatDeadline';
+import { Input } from '../../../../shared/ui/input/Input';
 
 /**
  * Компонент формы для добавления новой задачи.

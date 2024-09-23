@@ -7,53 +7,6 @@
   font-family: 'Arial', sans-serif;
 }
 
-.task {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.completed {
-  text-decoration: line-through;
-  color: #999;
-}
-
-button i {
-  font-size: 1.2em;
-}
-
 .MuiSnackbar-root {
   z-index: 1400;
-}
-
-.filter-add-task-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px 0;
-}
-
-/* Адаптивные стили */
-@media (max-width: 768px) {
-  .filter-add-task-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .todo-filter {
-    margin-bottom: 10px;
-  }
-
-  .add-task-button {
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .todo-filter select {
-    font-size: 14px;
-    padding: 4px;
-  }
 }

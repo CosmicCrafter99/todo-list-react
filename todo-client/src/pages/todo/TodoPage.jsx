@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import TodoFilter from '../../features/todo-filter/TodoFilter';
+import TodoFilter from '../../features/tasks/ui/todo-filter/TodoFilter';
 import Button from '../../shared/ui/button/Button';
-import TodoList from '../../features/todo-list/TodoList';
+import TodoList from '../../features/tasks/ui/todo-list/TodoList';
 import { deleteTask } from '../../shared/api/deleteTask';
 import { putTask } from '../../shared/api/putTask';
 import { putOrder } from '../../shared/api/putOrder';
@@ -11,10 +12,17 @@ import { postTask } from '../../shared/api/postTask';
 import { useAuth } from '../../features/auth/model/AuthContext';
 import { filterTasks } from '../../shared/lib/filterTasks';
 import Modal from '../../shared/ui/modal/Modal';
-import TodoForm from '../../features/todo-form/TodoForm';
+import TodoForm from '../../features/tasks/ui/todo-form/TodoForm';
+import {
+    addTask as addTaskAction,
+    deleteTask as deleteTaskAction,
+    updateTask as updateTaskAction
+} from '../../features/tasks/model/tasksSlice';
+import './TodoPage.css';
 
 const TodoPage = () => {
-    const [tasks, setTasks] = useState([]);
+    const dispatch = useDispatch();
+    const tasks = useSelector((state) => state.tasks);
     const [filter, setFilter] = useState('all');
     const { user } = useAuth();
     const [deadlineFilter, setDeadlineFilter] = useState('all-time');
@@ -24,18 +32,17 @@ const TodoPage = () => {
 
     // Получение задач с сервера
     useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const res = await getTasks(user.uid, filter);
+                const sortedTasks = res.sort((a, b) => a.order - b.order); // Сортировка задач по полю order
+                dispatch(addTaskAction(sortedTasks));
+            } catch (err) {
+                console.log('Ошибка при получении задач:', err);
+                enqueueSnackbar('Error fetching tasks! Please try again later', { variant: 'error' });
+            }
+        };
         if (user) {
-            const fetchTasks = async () => {
-                try {
-                    const res = await getTasks(user.uid, filter);
-                    const sortedTasks = res.sort((a, b) => a.order - b.order); // Сортировка задач по полю order
-                    setTasks(sortedTasks);
-                } catch (err) {
-                    console.log('Ошибка при получении задач:', err);
-                    enqueueSnackbar('Error fetching tasks! Please try again later', { variant: 'error' });
-                }
-            };
-
             fetchTasks();
         }
     }, [user, filter]);
@@ -44,7 +51,7 @@ const TodoPage = () => {
     const removeTask = async (id) => {
         try {
             await deleteTask(id);
-            setTasks(tasks.filter(task => task._id !== id));
+            dispatch(deleteTaskAction(id));
             enqueueSnackbar('Task deleted', { variant: 'error' });
         } catch (err) {
             console.log('Ошибка при удалении задачи:', err);
@@ -56,8 +63,7 @@ const TodoPage = () => {
     const updateTask = async (updatedTask) => {
         try {
             const res = await putTask(updatedTask);
-            const newTasks = tasks.map(t => t._id === updatedTask._id ? res : t);
-            setTasks(newTasks);
+            dispatch(updateTaskAction(updatedTask));
 
             const originalTask = tasks.find(t => t._id === updatedTask._id);
             if (updatedTask.completed !== undefined && originalTask.completed !== updatedTask.completed) {
@@ -66,6 +72,7 @@ const TodoPage = () => {
                 enqueueSnackbar(message, { variant });
 
                 // Обновление порядка задач
+                const newTasks = tasks.map(t => t._id === updatedTask._id ? res : t);
                 let incompleteTasks = newTasks.filter(task => !task.completed);
                 let completeTasks = newTasks.filter(task => task.completed);
                 if (updatedTask.completed) {
@@ -85,7 +92,7 @@ const TodoPage = () => {
 
     // Обновление порядка задач
     const updateTaskOrder = async (newTasks) => {
-        setTasks(newTasks);
+        dispatch(addTaskAction(newTasks));
         try {
             await putOrder(user.uid, newTasks);
         } catch (err) {
@@ -105,7 +112,7 @@ const TodoPage = () => {
         };
         try {
             const res = await postTask(newTask);
-            setTasks([res, ...tasks]);
+            dispatch(addTaskAction([res, ...tasks]));
             enqueueSnackbar('Task added', { variant: 'success' });
         } catch (err) {
             console.log('Ошибка при добавлении задачи:', err);

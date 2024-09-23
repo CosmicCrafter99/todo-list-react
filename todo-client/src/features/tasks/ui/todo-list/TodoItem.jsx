@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import './TodoItem.css';
-import IconButton from '../../shared/ui/icon-button/IconButton';
-import { getIsDeadlineOverdue } from '../../shared/lib/getIsDeadlineOverdue';
-import { formatDeadline } from '../../shared/lib/formatDeadline';
-import { Input } from '../../shared/ui/input/Input';
+import IconButton from '../../../../shared/ui/icon-button/IconButton';
+import { getIsDeadlineOverdue } from '../../../../shared/lib/getIsDeadlineOverdue';
+import { formatDeadline } from '../../../../shared/lib/formatDeadline';
+import { Input } from '../../../../shared/ui/input/Input';
 
 /**
  * Компонент отдельной задачи.

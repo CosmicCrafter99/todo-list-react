@@ -13,6 +13,11 @@
     background-color: #DB7093;
 }
 
+.completed {
+    text-decoration: line-through;
+    color: #999;
+}
+
 .left-section {
     display: flex;
     align-items: center;
